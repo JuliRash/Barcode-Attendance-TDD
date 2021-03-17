@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
-def index(request):
-    return HttpResponse('Application configured correctly!')
+def home_page():
+    pass
