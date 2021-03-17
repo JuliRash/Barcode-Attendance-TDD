@@ -1,12 +1,12 @@
-import time
-from selenium import webdriver
 import unittest
+from selenium import webdriver
+from decouple import config
 
 
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome(executable_path='/path/to/chromedriver')
+        self.browser = webdriver.Chrome(executable_path=config('webdriver_path'))
 
     def tearDown(self):
         self.browser.quit()
