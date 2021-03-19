@@ -20,24 +20,18 @@ class AttendanceModelTest(TestCase):
             email='idowujulius92@gmail.com',
             id_number='0908')
 
-        first_attendance = Attendance()
-        first_attendance.person = first_person
-        first_attendance.date = '2021-02-09'
-        first_attendance.time_in = '13:44:48'
-        first_attendance.time_out = '13:44:48'
-        first_attendance.purpose = 'Christening'
-        first_attendance.location = 'Delta-Side'
-        first_attendance.save()
-
-        second_attendance = Attendance()
-
-        second_attendance.person = second_person
-        second_attendance.date = '2021-02-09'
-        second_attendance.time_in = '13:44:48'
-        second_attendance.time_out = '13:44:48'
-        second_attendance.purpose = 'Christening'
-        first_attendance.location = 'Alpha-side'
-        second_attendance.save()
+        Attendance.objects.bulk_create([Attendance(person=first_person,
+                                                   date='2021-02-09',
+                                                   time_in='13:44:48',
+                                                   time_out='13:44:48',
+                                                   purpose='Christening',
+                                                   location='Alpha-side'),
+                                        Attendance(person=second_person,
+                                                   date='2021-02-09',
+                                                   time_in='13:44:48',
+                                                   time_out='13:44:48',
+                                                   purpose='Christening',
+                                                   location='Alpha-side'), ])
 
         saved_attendances = Attendance.objects.all()
 

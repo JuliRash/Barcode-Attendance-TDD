@@ -14,8 +14,14 @@
 
 <table id="list_user_info">
     <tr>
-        <td>{{ id_number }}</td>
+        <th>ID Number</th>
+        <th>Full Name</th>
     </tr>
+    <tr>
+        <td>{{ attendance.person.id_number }}</td>
+        <td>{{ attendance.person.first_name }}</td>
+    </tr>
+
 </table>
 </body>
 </html>
