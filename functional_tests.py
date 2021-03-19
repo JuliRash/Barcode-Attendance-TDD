@@ -24,14 +24,18 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Attendance', header_text)
         # she is invited to input her identity number straight away.
         input_box = self.browser.find_element_by_id('id_number')
-        self.assertEqual(
-            input_box.get_attribute('placeholder'),
-            'Enter ID Number')
+        # self.assertEqual(
+        #     input_box.get_attribute('placeholder'),
+        #     'Enter ID Number')
         # she types "0909" into the text box and clicks enter
         input_box.send_keys('0909')
         # when she hits enter, the page sends a post request to the mark attendance end-point,
         input_box.send_keys(Keys.ENTER)
         time.sleep(1)
+        table = self.browser.find_element_by_id("list_user_info")
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('0909', [row.text for row in rows])
+        self.assertIn('Edith', [row.text for row in rows])
         # if the number is correct it redirects her to marked attendance page,
         # and shows her her information containing [full_name, id_number, phone_number]
         # "Her Full name
