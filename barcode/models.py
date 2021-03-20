@@ -7,7 +7,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=255, )
     other_name = models.CharField(max_length=255, blank=True)
     email = models.EmailField()
-    id_number = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
 
     def __str__(self):
         return self.id_number

@@ -6,10 +6,11 @@ from barcode.models import Attendance, Person
 
 def home_page(request):
     if request.method == 'POST':
-        user_id_number = Person.objects.filter(id_number=request.POST['id_number'])
-        if user_id_number.exists():
-            attendance = Attendance.objects.create(person=user_id_number.get())
-            return render(request, 'home.html', {'attendance': attendance})
-        else:
-            return render(request, 'home.html', {'error': 'Error: This user does not exist'})
+        try:
+            person = Person.objects.get(code=request.POST['code'])
+            attendance = Attendance.objects.create(person=person)
+            context = {'attendance': attendance}
+        except Person.DoesNotExist:
+            context = {'error': 'Error: This user does not exist.'}
+        return render(request, 'home.html', context)
     return render(request, 'home.html')

@@ -11,14 +11,14 @@ class AttendanceModelTest(TestCase):
             last_name='idowu',
             other_name='ropee',
             email='idowujulius92@gmail.com',
-            id_number='0909')
+            code='0909')
 
         second_person = Person.objects.create(
             first_name='julipels',
             last_name='idowu',
             other_name='ropee',
             email='idowujulius92@gmail.com',
-            id_number='0908')
+            code='0908')
 
         Attendance.objects.bulk_create([Attendance(person=first_person,
                                                    date='2021-02-09',
@@ -39,5 +39,5 @@ class AttendanceModelTest(TestCase):
         second_saved_attendance = saved_attendances[1]
 
         self.assertEqual(saved_attendances.count(), 2)
-        self.assertEqual(first_saved_attendance.person.id_number, '0909')
-        self.assertEqual(second_saved_attendance.person.id_number, '0908')
+        self.assertEqual(first_saved_attendance.person.code, '0909')
+        self.assertEqual(second_saved_attendance.person.code, '0908')

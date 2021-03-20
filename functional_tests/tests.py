@@ -29,7 +29,7 @@ class NewVisitorTest(LiveServerTestCase):
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Attendance', header_text)
         # she is invited to input her identity number straight away.
-        input_box = self.browser.find_element_by_id('id_number')
+        input_box = self.browser.find_element_by_id('code')
         # she types "0909" into the text box and clicks enter
         input_box.send_keys('0909')
         # when she hits enter, the page sends a post request to the mark attendance end-point,

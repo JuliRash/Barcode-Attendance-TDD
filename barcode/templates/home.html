@@ -9,7 +9,7 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    <label for="id_number"></label><input type="text" name="id_number" id="id_number">
+    <label for="id_number"></label><input type="text" name="code" id="code">
 </form>
 
 {% if attendance %}
@@ -19,7 +19,7 @@
         <th>Full Name</th>
     </tr>
     <tr>
-        <td>{{ attendance.person.id_number }}</td>
+        <td>{{ attendance.person.code }}</td>
         <td>{{ attendance.person.first_name }}</td>
     </tr>
 
