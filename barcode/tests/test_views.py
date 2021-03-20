@@ -27,7 +27,11 @@ class HomePageTest(TestCase):
         response = self.client.post('/', data={'id_number': '0909'})
         self.assertEqual(response.status_code, 200)
 
-    def test_displays_user_info(self):
+    def test_displays_user_info_if_successful(self):
         response = self.client.post('/', data={'id_number': '0909'})
         self.assertIn('julipels', response.content.decode())
+
+    def test_displays_error_to_user_if_unsuccessful(self):
+        response = self.client.post('/', data={'id_number': '0908'})
+        self.assertIn('Error', response.content.decode())
 

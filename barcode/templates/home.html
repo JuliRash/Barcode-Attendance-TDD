@@ -12,7 +12,8 @@
     <label for="id_number"></label><input type="text" name="id_number" id="id_number">
 </form>
 
-<table id="list_user_info">
+{% if attendance %}
+    <table id="list_user_info">
     <tr>
         <th>ID Number</th>
         <th>Full Name</th>
@@ -23,5 +24,9 @@
     </tr>
 
 </table>
+
+{% else %}
+<p>{{ error }}</p>
+{% endif %}
 </body>
 </html>
