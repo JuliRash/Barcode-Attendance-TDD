@@ -3,22 +3,19 @@ from django.test import TestCase
 from barcode.models import Attendance, Person
 
 
+def generate_demo_person_data(user_code):
+    return Person.objects.create(first_name='julipels',
+                                 last_name='idowu',
+                                 other_name='ropee',
+                                 email='idowujulius92@gmail.com',
+                                 code=user_code)
+
+
 class AttendanceModelTest(TestCase):
 
     def test_saving_and_retrieving_user_attendance(self):
-        first_person = Person.objects.create(
-            first_name='julipels',
-            last_name='idowu',
-            other_name='ropee',
-            email='idowujulius92@gmail.com',
-            code='0909')
-
-        second_person = Person.objects.create(
-            first_name='julipels',
-            last_name='idowu',
-            other_name='ropee',
-            email='idowujulius92@gmail.com',
-            code='0908')
+        first_person = generate_demo_person_data('0909')
+        second_person = generate_demo_person_data('0908')
 
         Attendance.objects.bulk_create([Attendance(person=first_person,
                                                    date='2021-02-09',
