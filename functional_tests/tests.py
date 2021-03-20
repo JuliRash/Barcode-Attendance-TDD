@@ -3,9 +3,10 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from decouple import config
+from django.test import LiveServerTestCase
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome(executable_path=config('webdriver_path'))
@@ -21,7 +22,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_submit_attendance(self):
         # Edith has heard about a cool new online barcode attendance system.
         # she goes to check out its homepage.
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # she notices the page title and header mentions Attendance.
         self.assertIn('Attendance', self.browser.title)
