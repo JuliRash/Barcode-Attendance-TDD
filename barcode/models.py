@@ -23,3 +23,24 @@ class Attendance(models.Model):
 
     def __Str__(self):
         return self.person
+
+
+class Setup(models.Model):
+    organization_name = models.CharField(max_length=2000)
+    organization_description = models.TextField(blank=True)
+    organization_location = models.CharField(max_length=255)
+    organization_image = models.ImageField(upload_to='setup', blank=True)
+
+    class Meta:
+        verbose_name_plural = 'setup'
+
+    @classmethod
+    def object(cls):
+        return cls._default_manager.all().first()
+
+    def save(self, *args, **kwargs):
+        self.id = 1
+        return super().save(*args, **kwargs)
+
+
+
