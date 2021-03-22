@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from barcode.models import Attendance, Person
+from barcode.models import Attendance, Person, Setup
 
 
 def generate_demo_person_data(user_code):
@@ -9,6 +9,10 @@ def generate_demo_person_data(user_code):
                                  other_name='ropee',
                                  email='idowujulius92@gmail.com',
                                  code=user_code)
+
+
+def generate_demo_setup_data():
+    return Setup.objects.create(organization_name='Ropee Inc', organization_location='Nigeria')
 
 
 class AttendanceModelTest(TestCase):
