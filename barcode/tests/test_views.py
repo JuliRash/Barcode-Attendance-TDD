@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from barcode.models import Attendance, Person
+from barcode.tests.test_models import generate_demo_setup_data
 
 
 class HomePageTest(TestCase):
@@ -12,6 +13,7 @@ class HomePageTest(TestCase):
             other_name='ropee',
             email='idowujulius92@gmail.com',
             code='0909')
+        setup_configuration = generate_demo_setup_data()
 
     def test_uses_home_template(self):
         response = self.client.get('/')
