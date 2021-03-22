@@ -6,15 +6,29 @@ from selenium.common.exceptions import WebDriverException
 from decouple import config
 from django.test import LiveServerTestCase
 
-from barcode.tests.test_models import generate_demo_person_data
+from barcode.tests.test_models import generate_demo_person_data, generate_demo_setup_data
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTestBeforeConfiguration(LiveServerTestCase):
+
+    def setUp(self):
+        self.browser = webdriver.Chrome(executable_path=config('webdriver_path'))
+
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_guest_visits_application_not_configured(self):
+        self.browser.get(self.live_server_url)
+        self.assertIn('Application Not Configured', self.browser.page_source)
+
+
+class NewVisitorTestAfterConfiguration(LiveServerTestCase):
     MAX_WAIT = 10
 
     def setUp(self):
         self.person = generate_demo_person_data('0909')
         self.browser = webdriver.Chrome(executable_path=config('webdriver_path'))
+        self.site_setup = generate_demo_setup_data()
 
     def tearDown(self):
         self.browser.quit()
