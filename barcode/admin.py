@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from barcode.models import Setup
+
+
+@admin.register(Setup)
+class SetupAdmin(admin.ModelAdmin):
+    list_display = ['organization_name', 'organization_location']

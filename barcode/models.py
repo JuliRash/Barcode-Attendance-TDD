@@ -29,7 +29,7 @@ class Setup(models.Model):
     organization_name = models.CharField(max_length=2000)
     organization_description = models.TextField(blank=True)
     organization_location = models.CharField(max_length=255)
-    organization_image = models.ImageField(upload_to='setup', blank=True)
+    organization_logo = models.ImageField(upload_to='setup', blank=True)
 
     class Meta:
         verbose_name_plural = 'setup'
