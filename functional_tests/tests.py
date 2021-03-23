@@ -33,6 +33,16 @@ class NewVisitorTestAfterConfiguration(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def test_layout_and_styling(self):
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She notices there is no input box but an instruction
+        # for her to use the barcode scanner to mark her attendance.
+        input_box = self.browser.find_element_by_id("code")
+        self.assertTrue(input_box.get_attribute('autofocus'))
+
     def wait_for_row_in_list_table(self, row_text):
         start_time = time.time()
         while True:
