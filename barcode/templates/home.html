@@ -1,32 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Barcode Attendance</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-<h1>Barcode Attendance</h1>
+<script>
 
-<form action="" method="post">
-    {% csrf_token %}
-    <label for="code"></label><input type="text" name="code" id="code" autofocus>
-</form>
+    function reloadAttendancePage() {
+        // reload page to remove user information after logging attendance
+        setTimeout(function () {
+            window.location.assign("http://127.0.0.1:8000")
+        }, 5000)
+    }
+</script>
 
-{% if attendance %}
-    <table id="list_user_info">
-        <tr>
-            <th>ID Number</th>
-            <th>Full Name</th>
-        </tr>
-        <tr>
-            <td>{{ attendance.person.code }}</td>
-            <td>{{ attendance.person.first_name }}</td>
-        </tr>
+<!-- Background image -->
+<div class="bg-image"
+     style="background-image: url('static/images/barcode-scanner.jpg');
+      height: 100vh; background-repeat: no-repeat">
 
-    </table>
+    <div class="jumbotron">
+        <h1 class="display-4">{{ setup.organization_name }}</h1>
+        <p class="lead">Use the bar code scanner to mark your attendance
+            by scanning the barcode at the back of your id-card.</p>
 
-{% else %}
-    <p>{{ error }}</p>
-{% endif %}
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="code" id="code" autofocus
+               style="border-color: white; margin-left:-99999px; position:absolute;">
+    </form>
+
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert"><p id="error">{{ error }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+
+
+    {% if attendance %}
+        <div class="card">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">Attendance marked successfully!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ attendance.person.get_full_name }}</h5>
+                <hr>
+                <p>{{ attendance.date }}</p>
+                <hr>
+                <a href="#" class="btn btn-primary disabled">Time In: {{ attendance.time_in | time }}</a> &nbsp
+                {% if attendance.time_out %}
+                    <a href="#" class="btn btn-danger disabled">Time Out: {{ attendance.time_out | time }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <script>
+            reloadAttendancePage();
+        </script>
+    {% endif %}
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
