@@ -1,18 +1,24 @@
 import unittest
 import time
+import os
+
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 from decouple import config
-from django.test import LiveServerTestCase
+# from django.test import
 
 from barcode.tests.test_models import generate_demo_person_data, generate_demo_setup_data
 
 
-class NewVisitorTestBeforeConfiguration(LiveServerTestCase):
+class NewVisitorTestBeforeConfiguration(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome(executable_path=config('webdriver_path'))
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
 
     def tearDown(self):
         self.browser.quit()
@@ -22,7 +28,7 @@ class NewVisitorTestBeforeConfiguration(LiveServerTestCase):
         self.assertIn('Application Not Configured', self.browser.page_source)
 
 
-class NewVisitorTestAfterConfiguration(LiveServerTestCase):
+class NewVisitorTestAfterConfiguration(StaticLiveServerTestCase):
     MAX_WAIT = 10
 
     def setUp(self):
@@ -64,7 +70,7 @@ class NewVisitorTestAfterConfiguration(LiveServerTestCase):
         # she notices the page title and header mentions Attendance.
         self.assertIn('Attendance', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('Attendance', header_text)
+        self.assertIn(self.site_setup.organization_name, header_text)
         # she is invited to input her identity number straight away.
         input_box = self.browser.find_element_by_id('code')
         # she types "0909" which is a correct code into the text box and clicks enter
@@ -86,14 +92,14 @@ class NewVisitorTestAfterConfiguration(LiveServerTestCase):
         # she notices the page title and header mentions Attendance.
         self.assertIn('Attendance', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('Attendance', header_text)
+        self.assertIn(self.site_setup.organization_name, header_text)
         # she is invited to input her identity number straight away.
         input_box = self.browser.find_element_by_id('code')
         # she types "0908" which is a wrong code into the text box and clicks enter
         input_box.send_keys('0908')
         # when she hits enter, the page sends a post request and display the user information as output.
         input_box.send_keys(Keys.ENTER)
-        self.assertIn('Error', self.browser.find_element_by_tag_name('p').text)
+        self.assertIn('Error', self.browser.find_element_by_id('error').text)
 
 
 if __name__ == '__main__':
