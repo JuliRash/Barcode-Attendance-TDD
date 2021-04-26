@@ -53,8 +53,8 @@ class NewVisitorTestAfterConfiguration(StaticLiveServerTestCase):
         start_time = time.time()
         while True:
             try:
-                table = self.browser.find_element_by_id("list_user_info")
-                rows = table.find_elements_by_tag_name("tr")
+                table = self.browser.find_element_by_id("user_info")
+                rows = table.find_elements_by_tag_name("h5")
                 self.assertIn(row_text, str([row.text for row in rows]))
                 return
             except (AssertionError, WebDriverException) as e:
