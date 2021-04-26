@@ -53,8 +53,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ attendance.person.get_full_name }}</h5>
+            <div class="card-body" id="user_info">
+                <h5 class="card-title" id="full_name">{{ attendance.person.get_full_name }} | {{ attendance.person.code }}</h5>
                 <hr>
                 <p>{{ attendance.date }}</p>
                 <hr>
