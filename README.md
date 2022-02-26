@@ -33,6 +33,10 @@ you must have **[python 3](https://www.python.org/downloads/)** > and  [pipenv](
 
     $ cp .env.example .env
 
+### Setup app lication
+
+    $
+
 ### Edit the .env file created and set values to the variables.
 webdriver for [chrome](https://chromedriver.chromium.org/downloads)
 ```bash
