@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+
+  <body>
+    <form method="POST" action="{% url 'mark-attendance' %}">
+      {% csrf_token %}
+      <input type="text" name="code" />
+
+      <button type="submit">submit</button>
+    </form>
+  </body>
+</html>
