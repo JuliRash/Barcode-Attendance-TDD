@@ -35,7 +35,7 @@ you must have **[python 3](https://www.python.org/downloads/)** > and  [pipenv](
 
 ### Setup app lication
 
-    $
+    $ python manage.py app_setup
 
 ### Edit the .env file created and set values to the variables.
 webdriver for [chrome](https://chromedriver.chromium.org/downloads)
